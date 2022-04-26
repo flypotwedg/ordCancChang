@@ -2,6 +2,7 @@ package com.example.ordcancchang;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 public class orderAlter extends AppCompatActivity {
@@ -16,6 +17,14 @@ public class orderAlter extends AppCompatActivity {
         //otherwise error
 
         //could also show appointments but have them greyed out in listview
+
+    }
+    public void changeAct()
+    {
+
+    }
+    public void cancelAct()
+    {
 
     }
 }
