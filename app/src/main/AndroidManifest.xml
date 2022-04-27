@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OrdCancChang">
         <activity
+            android:name=".orderDetails"
+            android:exported="false" />
+        <activity
+            android:name=".orderList"
+            android:exported="false" />
+        <activity
             android:name=".orderCancel"
             android:exported="false" />
         <activity
