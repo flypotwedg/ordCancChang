@@ -89,6 +89,7 @@ public class orderList extends AppCompatActivity {
 
                     orderListAdapter adapter=new orderListAdapter(orderList.this,R.layout.adapter_view_layout,listOfOrders);
                     orderList.setAdapter(adapter);
+                    //orderList.isEnabled();
 
                 }
             }

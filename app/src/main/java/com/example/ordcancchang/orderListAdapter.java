@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class orderListAdapter extends ArrayAdapter{
+public class orderListAdapter extends ArrayAdapter<orderDetail>{
     Context context;
     int res;
 
@@ -23,7 +23,8 @@ public class orderListAdapter extends ArrayAdapter{
     }
 
     @NonNull
-    public View view(int pos, View convView, ViewGroup parent)
+    @Override
+    public View getView(int pos, View convView, ViewGroup parent)
     {
         /*
         String orderUID=getItem(pos).getOrderUID();
@@ -45,6 +46,9 @@ public class orderListAdapter extends ArrayAdapter{
         time.setText(apptTime);
 
          */
+        LayoutInflater inflate=LayoutInflater.from(this.context);
+        convView=inflate.inflate(res,parent,false);
+
         orderDetail order= (orderDetail) getItem(pos);
 
         TextView vendorName=(TextView) convView.findViewById(R.id.listVendName);
