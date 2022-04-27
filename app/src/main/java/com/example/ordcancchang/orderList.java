@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,8 @@ public class orderList extends AppCompatActivity {
     String orderUID;
     String userUID;
 
+    TextView tempTV;
+
     DatabaseReference database= FirebaseDatabase.getInstance().getReference();
 
     ArrayList<orderDetail> listOfOrders=new ArrayList<>();
@@ -35,6 +38,8 @@ public class orderList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
+
+        tempTV=(TextView)findViewById(R.id.disclaimer);
 
         orderList=(ListView)findViewById(R.id.orderList);
 
@@ -54,19 +59,19 @@ public class orderList extends AppCompatActivity {
                     int hour=calendar.get(Calendar.HOUR);
                     int min=calendar.get(Calendar.MINUTE);
 
-                    String dayOrNight=hour<12?"AM":"PM"; //checks whether appointment is am or pm
-                    String longHour=hour<13?String.valueOf(hour):String.valueOf(hour-12); //formats hour to 12 hour format
-                    String longMin=min<10?"0"+min: String.valueOf(min); //adds an extra 0 to the front if only single digit
-
-                    String date=(month+1) + "/" + day + "/" + year;;
-                    String time=longHour + ":" + longMin + " " + dayOrNight;
+                    String date=(month+1) + "/" + day + "/" + year;
+                    String time=(hour+12)+":"+min;
 
                     for(DataSnapshot order:snapshot.getChildren())
                     {
                         if((Integer.parseInt(order.child("completed").getValue().toString())==0))//checks if order is pending
                         {
+                            String[] longApptTimeTemp=order.child("apptTime").getValue().toString().split(":.*\\s[a-zA-Z]]M");
+
+                            tempTV.setText(longApptTimeTemp[0]+" | "+longApptTimeTemp[1]+" | "+longApptTimeTemp[2]);
+
                             if(((date.compareTo(order.child("apptDate").getValue().toString()))>=-1)//check date to see if date before
-                                    &&((time.compareTo(order.child("apptTime").getValue().toString())>=0)))//check time to see if within 24 hours
+                                    &&((time.compareTo(longApptTimeTemp[0])>=0)))//check time to see if within 24 hours
                             {
                                 continue; //skip putting item on list since its within 24 hours
                             }
@@ -89,23 +94,26 @@ public class orderList extends AppCompatActivity {
 
                     orderListAdapter adapter=new orderListAdapter(orderList.this,R.layout.adapter_view_layout,listOfOrders);
                     orderList.setAdapter(adapter);
-                    //orderList.isEnabled();
-
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(orderList.this, "An error occurred retrieving your orders. Please try again", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     public void finishAct() {
         Intent ret=new Intent();
         ret.putExtra("orderUID",orderUID);
-
+        setResult(RESULT_OK, ret);
         finish();
     }
 }

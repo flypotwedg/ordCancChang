@@ -91,9 +91,10 @@ public class orderAlter extends AppCompatActivity {
                 }
                 break;
             case 3: //listview
-                orderUID=data.getStringExtra("orderUID");
+
                 if(resCode==RESULT_OK)
                 {
+                    orderUID=data.getStringExtra("orderUID");
                     switch (action) {
                         case 1:
                             changeAct();
