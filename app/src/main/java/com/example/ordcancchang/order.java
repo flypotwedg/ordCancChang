@@ -1,12 +1,12 @@
 package com.example.ordcancchang;
 
-public class orderDetail{
+public class order {
     private String orderUID;
     private String vendName;
     private String apptDate;
     private String apptTime;
 
-    public orderDetail(String orderUID, String vendName, String apptDate, String apptTime)
+    public order(String orderUID, String vendName, String apptDate, String apptTime)
     {
         this.orderUID=orderUID;
         this.vendName=vendName;

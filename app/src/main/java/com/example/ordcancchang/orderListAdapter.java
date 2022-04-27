@@ -11,11 +11,11 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class orderListAdapter extends ArrayAdapter<orderDetail>{
+public class orderListAdapter extends ArrayAdapter<order>{
     Context context;
     int res;
 
-    public orderListAdapter(Context context, int resource, ArrayList<orderDetail> list)
+    public orderListAdapter(Context context, int resource, ArrayList<order> list)
     {
         super(context,resource,list);
         this.context=context;
@@ -49,7 +49,7 @@ public class orderListAdapter extends ArrayAdapter<orderDetail>{
         LayoutInflater inflate=LayoutInflater.from(this.context);
         convView=inflate.inflate(res,parent,false);
 
-        orderDetail order= (orderDetail) getItem(pos);
+        order order= (com.example.ordcancchang.order) getItem(pos);
 
         TextView vendorName=(TextView) convView.findViewById(R.id.listVendName);
         TextView date=(TextView) convView.findViewById(R.id.listApptDate);

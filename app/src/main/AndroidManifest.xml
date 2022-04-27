@@ -16,9 +16,6 @@
             android:name=".orderList"
             android:exported="false" />
         <activity
-            android:name=".orderCancel"
-            android:exported="false" />
-        <activity
             android:name=".orderChange"
             android:exported="false" />
         <activity

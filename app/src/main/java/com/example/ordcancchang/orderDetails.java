@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,18 +79,34 @@ public class orderDetails extends AppCompatActivity {
                 Toast.makeText(orderDetails.this, "Error retrieving order information", Toast.LENGTH_LONG).show();
             }
         });
+
+        cancButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //openDialog();
+            }
+        });
+
+        chanButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeAct();
+            }
+        });
+
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(2);
+        super.onBackPressed();
+    }
+
     public void changeAct()
     {
         Intent change=new Intent(this, orderChange.class);
         change.putExtra("orderUID",orderUID);
         startActivityForResult(change,1);
-    }
-    public void cancelAct()
-    {
-        Intent cancel=new Intent(this, orderCancel.class);
-        cancel.putExtra("orderUID",orderUID);
-        startActivityForResult(cancel,2);
     }
     protected void onActivityResult(int reqCode, int resCode, Intent data)
     {

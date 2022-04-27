@@ -1,15 +1,12 @@
 package com.example.ordcancchang;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.StringTokenizer;
 
 public class orderList extends AppCompatActivity {
 
@@ -58,7 +54,7 @@ public class orderList extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
-                    ArrayList<orderDetail> listOfOrders=new ArrayList<>();
+                    ArrayList<order> listOfOrders=new ArrayList<>();
 
                     Calendar calendar=Calendar.getInstance();
                     int year=calendar.get(Calendar.YEAR);
@@ -80,8 +76,8 @@ public class orderList extends AppCompatActivity {
                             int newHour=Integer.parseInt(sansMin[0])+12; //add 12 to hour
                             String newTime=String.valueOf(newHour)+":"+sansMin[1]; //recombine
 
-                            if(((date.compareTo(order.child("apptDate").getValue().toString()))>=-1)//check date to see if date before
-                                    &&((time.compareTo(newTime)<=0)))//check time to see if within 24 hours
+                            if(((date.compareTo(order.child("apptDate").getValue().toString()))>-1)//check date to see if date before
+                                    &&((time.compareTo(newTime))<=0))//check time to see if within 24 hours
                             {
                                 continue; //skip putting item on list since its within 24 hours
                             }
@@ -92,7 +88,7 @@ public class orderList extends AppCompatActivity {
                                 String apptDateTemp=order.child("apptDate").getValue().toString();
                                 String apptTimeTemp=order.child("apptTime").getValue().toString();
 
-                                orderDetail temp=new orderDetail(orderUIDTemp,vendNameTemp,apptDateTemp,apptTimeTemp);
+                                com.example.ordcancchang.order temp=new order(orderUIDTemp,vendNameTemp,apptDateTemp,apptTimeTemp);
                                 listOfOrders.add(temp);
                             }
                         }
@@ -110,7 +106,7 @@ public class orderList extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             //get orderUID from clicked item - done
                             //pass to details - done
-                            //details will query and display data and give 2 buttons
+                            //details will query and display data and give 2 buttons - done
                             //cancel will give a prompt to confirm and set order to -1
                             //change will open up schedule or its own custom activity to change
                             //both will finish, then orderlist will finish
@@ -142,16 +138,19 @@ public class orderList extends AppCompatActivity {
         super.onActivityResult(reqCode, resCode, data);
         switch(reqCode)
         {
-            case 1:
-                if(resCode==RESULT_OK)
+            case 1: //orderDetails
+                switch(resCode)
                 {
-                    Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_LONG).show();
+                    case RESULT_OK: //changed or cancelled
+                        Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_LONG).show();
+                        break;
+                    case 2: //user presses back
+                        Toast.makeText(this, "Changes cancelled", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
+                        break;
                 }
-                else
-                {
-                    Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
-                }
-                break;
             default:
                 Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
                 break;
