@@ -1,10 +1,10 @@
 package com.example.ordcancchang;
 
 public class orderDetail{
-    String orderUID;
-    String vendName;
-    String apptDate;
-    String apptTime;
+    private String orderUID;
+    private String vendName;
+    private String apptDate;
+    private String apptTime;
 
     public orderDetail(String orderUID, String vendName, String apptDate, String apptTime)
     {
@@ -28,5 +28,22 @@ public class orderDetail{
     public void setApptTime(String apptTime)
     {
         this.apptTime=apptTime;
+    }
+
+    public String getOrderUID()
+    {
+        return orderUID;
+    }
+    public String getVendName()
+    {
+        return vendName;
+    }
+    public String getApptDate()
+    {
+        return apptDate;
+    }
+    public String getApptTime()
+    {
+        return apptTime;
     }
 }

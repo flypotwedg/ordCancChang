@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class orderList extends AppCompatActivity {
@@ -26,6 +28,8 @@ public class orderList extends AppCompatActivity {
     String userUID;
 
     DatabaseReference database= FirebaseDatabase.getInstance().getReference();
+
+    ArrayList<orderDetail> listOfOrders=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class orderList extends AppCompatActivity {
                                 String apptTimeTemp=order.child("apptTime").getValue().toString();
 
                                 orderDetail temp=new orderDetail(orderUIDTemp,vendNameTemp,apptDateTemp,apptTimeTemp);
+                                listOfOrders.add(temp);
                             }
                         }
                         else
@@ -81,6 +86,10 @@ public class orderList extends AppCompatActivity {
                             continue; //skip item since it is finished or cancelled
                         }
                     }
+
+                    orderListAdapter adapter=new orderListAdapter(orderList.this,R.layout.adapter_view_layout,listOfOrders);
+                    orderList.setAdapter(adapter);
+
                 }
             }
 

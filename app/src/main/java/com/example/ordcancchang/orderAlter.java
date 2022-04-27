@@ -27,7 +27,9 @@ public class orderAlter extends AppCompatActivity {
         changeButt=(Button)findViewById(R.id.change);
         cancelButt=(Button)findViewById(R.id.cancel);
 
-        userUID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //userUID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        userUID="MBMmAi2B3eRjhIsXo0Lsa6ChfFM2";
 
         changeButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,12 +46,6 @@ public class orderAlter extends AppCompatActivity {
                 listAct();
             }
         });
-
-        //check date and time to see if before 24 hours of appointment
-        //if true, allow the change or cancellation
-        //otherwise error
-
-        //could also show appointments but have them greyed out in listview
 
     }
     public void changeAct()
