@@ -147,6 +147,9 @@ public class orderList extends AppCompatActivity {
                     case 2: //user presses back
                         Toast.makeText(this, "Changes cancelled", Toast.LENGTH_LONG).show();
                         break;
+                    case 3:
+                        Toast.makeText(this, "Order cancelled", Toast.LENGTH_LONG).show();
+                        break;
                     default:
                         Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
                         break;
@@ -155,6 +158,5 @@ public class orderList extends AppCompatActivity {
                 Toast.makeText(this, "An error occurred. Please try again", Toast.LENGTH_LONG).show();
                 break;
         }
-        finish();
     }
 }

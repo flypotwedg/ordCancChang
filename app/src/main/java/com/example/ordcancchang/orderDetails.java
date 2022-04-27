@@ -1,8 +1,10 @@
 package com.example.ordcancchang;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -83,7 +85,7 @@ public class orderDetails extends AppCompatActivity {
         cancButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //openDialog();
+                openDialog();
             }
         });
 
@@ -93,7 +95,6 @@ public class orderDetails extends AppCompatActivity {
                 changeAct();
             }
         });
-
     }
 
     @Override
@@ -101,7 +102,29 @@ public class orderDetails extends AppCompatActivity {
         setResult(2);
         super.onBackPressed();
     }
-
+    public void openDialog()
+    {
+        AlertDialog.Builder diagBuild=new AlertDialog.Builder(this);
+        diagBuild.setTitle("Warning");
+        diagBuild.setMessage("This cannot be undone. Are you sure you want to cancel your order?");
+        diagBuild.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                database.child("Orders").child(orderUID).child("completed").setValue(-1);
+                setResult(3);
+                finish();
+            }
+        });
+        diagBuild.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+                Toast.makeText(orderDetails.this, "Changes discarded", Toast.LENGTH_SHORT).show();
+            }
+        });
+        AlertDialog diag=diagBuild.create();
+        diag.show();
+    }
     public void changeAct()
     {
         Intent change=new Intent(this, orderChange.class);
@@ -120,16 +143,6 @@ public class orderDetails extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(this, "An error occurred while applying your changes. Please try again", Toast.LENGTH_LONG).show();
-                }
-                break;
-            case 2: //cancel order
-                if(resCode==RESULT_OK)
-                {
-                    Toast.makeText(this, "Your order has been cancelled", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Toast.makeText(this, "An error occurred while cancelling your order. Please try again", Toast.LENGTH_LONG).show();
                 }
                 break;
             default:
