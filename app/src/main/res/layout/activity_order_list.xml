@@ -11,7 +11,7 @@
         android:layout_width="350dp"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="Pending Orders"
+        android:text="Choose an Order \nto Revise or Cancel"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"

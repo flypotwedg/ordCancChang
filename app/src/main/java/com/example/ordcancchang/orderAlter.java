@@ -48,6 +48,12 @@ public class orderAlter extends AppCompatActivity {
         });
 
     }
+    public void listAct()
+    {
+        Intent list=new Intent(this, orderList.class);
+        list.putExtra("userUID",userUID);
+        startActivityForResult(list,3);
+    }
     public void changeAct()
     {
         Intent change=new Intent(this, orderChange.class);
@@ -59,12 +65,6 @@ public class orderAlter extends AppCompatActivity {
         Intent cancel=new Intent(this, orderCancel.class);
         cancel.putExtra("orderUID",orderUID);
         startActivityForResult(cancel,2);
-    }
-    public void listAct()
-    {
-        Intent list=new Intent(this, orderList.class);
-        list.putExtra("userUID",userUID);
-        startActivityForResult(list,3);
     }
     protected void onActivityResult(int reqCode, int resCode, Intent data)
     {

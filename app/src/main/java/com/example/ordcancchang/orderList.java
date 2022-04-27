@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,7 +26,6 @@ import java.util.StringTokenizer;
 public class orderList extends AppCompatActivity {
 
     ListView orderList;
-    //custom adapter?
 
     String orderUID;
     String userUID;
@@ -32,8 +33,6 @@ public class orderList extends AppCompatActivity {
     TextView tempTV;
 
     DatabaseReference database= FirebaseDatabase.getInstance().getReference();
-
-    ArrayList<orderDetail> listOfOrders=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +47,13 @@ public class orderList extends AppCompatActivity {
 
         Query ordQuery=database.child("Orders").orderByChild(userUID);
 
-        ordQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        ordQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
+                    ArrayList<orderDetail> listOfOrders=new ArrayList<>();
+
                     Calendar calendar=Calendar.getInstance();
                     int year=calendar.get(Calendar.YEAR);
                     int month=calendar.get(Calendar.MONTH);
@@ -96,6 +97,14 @@ public class orderList extends AppCompatActivity {
 
                     orderListAdapter adapter=new orderListAdapter(orderList.this,R.layout.adapter_view_layout,listOfOrders);
                     orderList.setAdapter(adapter);
+
+                    orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        }
+                    });
+
                 }
             }
             @Override
@@ -104,18 +113,46 @@ public class orderList extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setResult(RESULT_CANCELED);
-        finish();
+    public void changeAct()
+    {
+        Intent change=new Intent(this, orderChange.class);
+        change.putExtra("orderUID",orderUID);
+        startActivityForResult(change,1);
     }
-
-    public void finishAct() {
-        Intent ret=new Intent();
-        ret.putExtra("orderUID",orderUID);
-        setResult(RESULT_OK, ret);
+    public void cancelAct()
+    {
+        Intent cancel=new Intent(this, orderCancel.class);
+        cancel.putExtra("orderUID",orderUID);
+        startActivityForResult(cancel,2);
+    }
+    protected void onActivityResult(int reqCode, int resCode, Intent data)
+    {
+        super.onActivityResult(reqCode, resCode, data);
+        switch(reqCode) {
+            case 1: //change order
+                if(resCode==RESULT_OK)
+                {
+                    Toast.makeText(this, "Changes save successfully", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(this, "An error occurred while applying your changes. Please try again", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case 2: //cancel order
+                if(resCode==RESULT_OK)
+                {
+                    Toast.makeText(this, "Your order has been cancelled", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(this, "An error occurred while cancelling your order. Please try again", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                Toast.makeText(this, "An error occurred while saving your changes. Please try again", Toast.LENGTH_LONG).show();
+                break;
+        }
         finish();
     }
 }
