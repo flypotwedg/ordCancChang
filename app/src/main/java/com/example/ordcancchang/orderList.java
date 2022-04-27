@@ -101,6 +101,12 @@ public class orderList extends AppCompatActivity {
                     orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            //get orderUID from clicked item
+                            //pass to details
+                            //details will query and display data and give 2 buttons
+                            //cancel will give a prompt to confirm and set order to -1
+                            //change will open up schedule or its own custom activity to change
+                            //both will finish, then orderlist will finish
 
                         }
                     });
