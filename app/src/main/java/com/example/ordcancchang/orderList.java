@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 public class orderList extends AppCompatActivity {
 
@@ -60,18 +61,19 @@ public class orderList extends AppCompatActivity {
                     int min=calendar.get(Calendar.MINUTE);
 
                     String date=(month+1) + "/" + day + "/" + year;
-                    String time=(hour+12)+":"+min;
+                    String time=(hour+12)+":"+min; //current time
 
                     for(DataSnapshot order:snapshot.getChildren())
                     {
                         if((Integer.parseInt(order.child("completed").getValue().toString())==0))//checks if order is pending
                         {
-                            String[] longApptTimeTemp=order.child("apptTime").getValue().toString().split(":.*\\s[a-zA-Z]]M");
-
-                            tempTV.setText(longApptTimeTemp[0]+" | "+longApptTimeTemp[1]+" | "+longApptTimeTemp[2]);
+                            String sansDay[]=order.child("apptTime").getValue().toString().split("\\s[AP]M"); //take away AM or PM
+                            String sansMin[]=sansDay[0].split(":"); //split hour and min
+                            int newHour=Integer.parseInt(sansMin[0])+12; //add 12 to hour
+                            String newTime=String.valueOf(newHour)+":"+sansMin[1]; //recombine
 
                             if(((date.compareTo(order.child("apptDate").getValue().toString()))>=-1)//check date to see if date before
-                                    &&((time.compareTo(longApptTimeTemp[0])>=0)))//check time to see if within 24 hours
+                                    &&((time.compareTo(newTime)<=0)))//check time to see if within 24 hours
                             {
                                 continue; //skip putting item on list since its within 24 hours
                             }
