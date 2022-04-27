@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100">
+
+    <TextView
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="vendName"
+        android:id="@+id/listVendName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="50"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="50">
+        <TextView
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:id="@+id/listApptDate"
+            android:text="date: 1/1/1970"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:id="@+id/listApptTime"
+            android:text="time: 12:00 PM"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

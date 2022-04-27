@@ -22,8 +22,6 @@ public class orderList extends AppCompatActivity {
     ListView orderList;
     //custom adapter?
 
-
-
     String orderUID;
     String userUID;
 
@@ -66,16 +64,21 @@ public class orderList extends AppCompatActivity {
                             if(((date.compareTo(order.child("apptDate").getValue().toString()))>=-1)//check date to see if date before
                                     &&((time.compareTo(order.child("apptTime").getValue().toString())>=0)))//check time to see if within 24 hours
                             {
-                                continue; //skip putting item on list since
+                                continue; //skip putting item on list since its within 24 hours
                             }
                             else
                             {
-                                //put on list
+                                String orderUIDTemp=order.getKey();
+                                String vendNameTemp=order.child("vendName").getValue().toString();
+                                String apptDateTemp=order.child("apptDate").getValue().toString();
+                                String apptTimeTemp=order.child("apptTime").getValue().toString();
+
+                                orderDetail temp=new orderDetail(orderUIDTemp,vendNameTemp,apptDateTemp,apptTimeTemp);
                             }
                         }
                         else
                         {
-                            continue;
+                            continue; //skip item since it is finished or cancelled
                         }
                     }
                 }
