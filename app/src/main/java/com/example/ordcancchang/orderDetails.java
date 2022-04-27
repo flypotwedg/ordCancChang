@@ -58,14 +58,14 @@ public class orderDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
-                    orderUIDLabel.setText(orderUID);
-                    vendNameLabel.setText(snapshot.child(orderUID).child("vendName").getValue().toString());
-                    apptDateLabel.setText(snapshot.child(orderUID).child("apptDate").getValue().toString());
-                    apptTimeLabel.setText(snapshot.child(orderUID).child("apptTime").getValue().toString());
+                    orderUIDLabel.setText("Order ID:\n"+orderUID);
+                    vendNameLabel.setText("Vendor:\n"+snapshot.child(orderUID).child("vendName").getValue().toString());
+                    apptDateLabel.setText("Appointment Date:\n"+snapshot.child(orderUID).child("apptDate").getValue().toString());
+                    apptTimeLabel.setText("Appointment Time:\n"+snapshot.child(orderUID).child("apptTime").getValue().toString());
 
                     float tempPrice=Float.parseFloat(snapshot.child(orderUID).child("price").getValue().toString());
                     String priceStr=dfZero.format(tempPrice);
-                    priceLabel.setText("$ "+priceStr);
+                    priceLabel.setText("Price:\n$"+priceStr);
                 }
                 else
                 {

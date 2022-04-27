@@ -116,7 +116,7 @@ public class orderList extends AppCompatActivity {
                             //both will finish, then orderlist will finish
                             orderUID=listOfOrders.get(i).getOrderUID();
 
-                            Intent detail=new Intent(orderList.this, orderDetail.class);
+                            Intent detail=new Intent(orderList.this, orderDetails.class);
                             detail.putExtra("orderUID",orderUID);
                             startActivityForResult(detail,1);
                         }
