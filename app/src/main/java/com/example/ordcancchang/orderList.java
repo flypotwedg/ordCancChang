@@ -107,8 +107,8 @@ public class orderList extends AppCompatActivity {
                             //get orderUID from clicked item - done
                             //pass to details - done
                             //details will query and display data and give 2 buttons - done
-                            //cancel will give a prompt to confirm and set order to -1
-                            //change will open up schedule or its own custom activity to change
+                            //cancel will give a prompt to confirm and set order to -1 - done
+                            //change will open up schedule or its own custom activity to change - in progress
                             //both will finish, then orderlist will finish
                             orderUID=listOfOrders.get(i).getOrderUID();
 
@@ -142,7 +142,6 @@ public class orderList extends AppCompatActivity {
                 switch(resCode)
                 {
                     case RESULT_OK: //changed or cancelled
-                        Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_LONG).show();
                         break;
                     case 2: //user presses back
                         Toast.makeText(this, "Changes cancelled", Toast.LENGTH_LONG).show();

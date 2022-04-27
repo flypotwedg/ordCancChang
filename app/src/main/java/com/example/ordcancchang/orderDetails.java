@@ -138,7 +138,7 @@ public class orderDetails extends AppCompatActivity {
             case 1: //change order
                 if(resCode==RESULT_OK)
                 {
-                    Toast.makeText(this, "Changes save successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

@@ -6,4 +6,159 @@
     android:layout_height="match_parent"
     tools:context=".orderChange">
 
+    <TextView
+        android:id="@+id/vendNameText"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="vendor_name"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/street"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+
+    <EditText
+        android:id="@+id/street"
+        android:layout_width="350dp"
+        android:layout_height="75dp"
+        android:hint="Street"
+        android:inputType="text"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        app:layout_constraintBottom_toTopOf="@+id/city"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vendNameText" />
+
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="350dp"
+        android:layout_height="75dp"
+        android:hint="City"
+        android:inputType="text"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        app:layout_constraintBottom_toTopOf="@+id/state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/street" />
+
+    <EditText
+        android:id="@+id/state"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="32dp"
+        android:hint="State"
+        android:inputType="text"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        app:layout_constraintBottom_toTopOf="@+id/dateDisp"
+        app:layout_constraintEnd_toStartOf="@+id/zipcode"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/city"
+        app:layout_constraintVertical_bias="0.469" />
+
+    <EditText
+        android:id="@+id/zipcode"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="28dp"
+        android:hint="Zip code"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/state"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.484" />
+
+    <TextView
+        android:id="@+id/dateDisp"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="28dp"
+        android:gravity="center"
+        android:text="01/01/1970"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/timeDisp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/state"
+        app:layout_constraintVertical_bias="0.614" />
+
+    <Button
+        android:id="@+id/dateButton"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="28dp"
+        android:gravity="center"
+        android:text="Select Date"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.625" />
+
+    <TextView
+        android:id="@+id/timeDisp"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:gravity="center"
+        android:text="12:00 PM"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/confirmButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateDisp"
+        app:layout_constraintVertical_bias="0.754" />
+
+    <Button
+        android:id="@+id/timeButton"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
+        android:gravity="center"
+        android:text="Select Time"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.765" />
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="350dp"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:text="Confirm Changes"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:enabled="false"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeDisp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
