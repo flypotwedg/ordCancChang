@@ -8,14 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 public class orderAlter extends AppCompatActivity {
 
-    Button changeButt;
-    Button cancelButt;
+    Button button;
 
-    int action=-1;
     String userUID;
     String orderUID;
 
@@ -24,25 +20,14 @@ public class orderAlter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_alter);
 
-        changeButt=(Button)findViewById(R.id.change);
-        cancelButt=(Button)findViewById(R.id.cancel);
+        button =(Button)findViewById(R.id.buttonn);
 
         //userUID=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userUID="MBMmAi2B3eRjhIsXo0Lsa6ChfFM2"; //temp, replace with line above
 
-        userUID="MBMmAi2B3eRjhIsXo0Lsa6ChfFM2";
-
-        changeButt.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                action=1;
-                listAct();
-            }
-        });
-
-        cancelButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                action=2;
                 listAct();
             }
         });
@@ -54,18 +39,7 @@ public class orderAlter extends AppCompatActivity {
         list.putExtra("userUID",userUID);
         startActivityForResult(list,3);
     }
-    public void changeAct()
-    {
-        Intent change=new Intent(this, orderChange.class);
-        change.putExtra("orderUID",orderUID);
-        startActivityForResult(change,1);
-    }
-    public void cancelAct()
-    {
-        Intent cancel=new Intent(this, orderCancel.class);
-        cancel.putExtra("orderUID",orderUID);
-        startActivityForResult(cancel,2);
-    }
+    /*
     protected void onActivityResult(int reqCode, int resCode, Intent data)
     {
         super.onActivityResult(reqCode, resCode, data);
@@ -116,5 +90,5 @@ public class orderAlter extends AppCompatActivity {
                 Toast.makeText(this, "An error occurred while saving your changes. Please try again", Toast.LENGTH_LONG).show();
                 break;
         }
-    }
+    }*/
 }
