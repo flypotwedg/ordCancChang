@@ -15,10 +15,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class orderList extends AppCompatActivity {
 
     ListView orderList;
     //custom adapter?
+
+
 
     String orderUID;
     String userUID;
@@ -41,11 +45,37 @@ public class orderList extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
+                    Calendar calendar=Calendar.getInstance();
+                    int year=calendar.get(Calendar.YEAR);
+                    int month=calendar.get(Calendar.MONTH);
+                    int day=calendar.get(Calendar.DAY_OF_MONTH);
+                    int hour=calendar.get(Calendar.HOUR);
+                    int min=calendar.get(Calendar.MINUTE);
+
+                    String dayOrNight=hour<12?"AM":"PM"; //checks whether appointment is am or pm
+                    String longHour=hour<13?String.valueOf(hour):String.valueOf(hour-12); //formats hour to 12 hour format
+                    String longMin=min<10?"0"+min: String.valueOf(min); //adds an extra 0 to the front if only single digit
+
+                    String date=(month+1) + "/" + day + "/" + year;;
+                    String time=longHour + ":" + longMin + " " + dayOrNight;
+
                     for(DataSnapshot order:snapshot.getChildren())
                     {
-                        if(Integer.parseInt(order.child("completed").getValue().toString())==0)
+                        if((Integer.parseInt(order.child("completed").getValue().toString())==0))//checks if order is pending
                         {
-
+                            if(((date.compareTo(order.child("apptDate").getValue().toString()))>=-1)//check date to see if date before
+                                    &&((time.compareTo(order.child("apptTime").getValue().toString())>=0)))//check time to see if within 24 hours
+                            {
+                                continue; //skip putting item on list since
+                            }
+                            else
+                            {
+                                //put on list
+                            }
+                        }
+                        else
+                        {
+                            continue;
                         }
                     }
                 }
