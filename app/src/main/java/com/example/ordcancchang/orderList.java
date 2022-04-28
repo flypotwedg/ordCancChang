@@ -77,7 +77,6 @@ public class orderList extends AppCompatActivity {
 
                                 String dateTemp=order.child("apptDate").getValue().toString();
                                 String dateSplit[]=dateTemp.split("/");//0 month, 1 day, 2 year
-                                tempTV.setText(sansMin[1]+" | "+min);
                                 if(Integer.parseInt(dateSplit[2])==year||year>=Integer.parseInt(dateSplit[2]))//same year or previous year
                                 {
                                     if(Integer.parseInt(dateSplit[0])==month||month>=Integer.parseInt(dateSplit[0]))//same month or previous month

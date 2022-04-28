@@ -15,11 +15,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 
 public class orderChange extends AppCompatActivity {
 
-    String vendorName;
+    String orderUID;
+    String vendName;
     String apptAddr;
 
     EditText streetInput;
@@ -37,7 +40,7 @@ public class orderChange extends AppCompatActivity {
     int vendOpen = 8; //set to check from firebase or smth
     int vendClose = 20; //same as above
 
-    TextView vendName;
+    TextView vendNameLabel;
 
     private Button confirmBtn;
 
@@ -62,7 +65,7 @@ public class orderChange extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_change);
 
-        getSupportActionBar().setTitle("Set Appointment"); //renames action bar
+        getSupportActionBar().setTitle("Edit Appointment"); //renames action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //enables back arrow in top bar
 
         streetInput = (EditText) findViewById(R.id.street);
@@ -70,25 +73,28 @@ public class orderChange extends AppCompatActivity {
         stateInput = (EditText) findViewById(R.id.state);
         zipcodeInput = (EditText) findViewById(R.id.zipcode);
 
-        //tokenize address
-        streetInput.setText("");
-        cityInput.setText("");
-        stateInput.setText("");
-        zipcodeInput.setText("");
+        orderUID = getIntent().getStringExtra("orderUID");
+        apptAddr=getIntent().getStringExtra("apptAddr");
+        apptDate=getIntent().getStringExtra("apptDate");
+        apptTime=getIntent().getStringExtra("apptTime");
+        vendName =getIntent().getStringExtra("vendName");
 
+        String addrSplit[]=apptAddr.split(",");
+
+        //tokenize address
+        streetInput.setText(addrSplit[0]);
+        cityInput.setText(addrSplit[1]);
+        stateInput.setText(addrSplit[2]);
+        zipcodeInput.setText(addrSplit[3]);
 
         streetInput.addTextChangedListener(addressTextWatch);
         cityInput.addTextChangedListener(addressTextWatch);
         stateInput.addTextChangedListener(addressTextWatch);
         zipcodeInput.addTextChangedListener(addressTextWatch);
 
-        vendName = (TextView) findViewById(R.id.vendNameText);
-        vendorName = getIntent().getStringExtra("vendName");
-        vendName.setText(vendorName);
+        vendNameLabel = (TextView) findViewById(R.id.vendNameText);
 
-        apptAddr=getIntent().getStringExtra("apptAddr");
-        apptDate=getIntent().getStringExtra("apptDate");
-        apptTime=getIntent().getStringExtra("apptTime");
+        vendNameLabel.setText(vendName);
 
         dateBtn = (Button) findViewById(R.id.dateButton);
         date = (TextView) findViewById(R.id.dateDisp);

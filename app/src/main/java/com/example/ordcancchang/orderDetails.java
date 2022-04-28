@@ -24,6 +24,10 @@ import java.text.DecimalFormat;
 public class orderDetails extends AppCompatActivity {
 
     String orderUID;
+    String apptAddr;
+    String apptTime;
+    String apptDate;
+    String vendName;
 
     TextView orderUIDLabel;
     TextView vendNameLabel;
@@ -63,11 +67,16 @@ public class orderDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
+                    apptAddr=snapshot.child(orderUID).child("apptAddr").getValue().toString();
+                    apptDate=snapshot.child(orderUID).child("apptDate").getValue().toString();
+                    apptTime=snapshot.child(orderUID).child("apptTime").getValue().toString();
+                    vendName=snapshot.child(orderUID).child("vendName").getValue().toString();
+
                     orderUIDLabel.setText("Order ID:\n"+orderUID);
-                    vendNameLabel.setText("Vendor:\n"+snapshot.child(orderUID).child("vendName").getValue().toString());
-                    addrLabel.setText("Address:\n"+snapshot.child(orderUID).child("apptAddr").getValue().toString());
-                    apptDateLabel.setText("Appointment Date:\n"+snapshot.child(orderUID).child("apptDate").getValue().toString());
-                    apptTimeLabel.setText("Appointment Time:\n"+snapshot.child(orderUID).child("apptTime").getValue().toString());
+                    vendNameLabel.setText("Vendor:\n"+vendName);
+                    addrLabel.setText("Address:\n"+apptAddr);
+                    apptDateLabel.setText("Appointment Date:\n"+apptDate);
+                    apptTimeLabel.setText("Appointment Time:\n"+apptTime);
 
                     float tempPrice=Float.parseFloat(snapshot.child(orderUID).child("price").getValue().toString());
                     String priceStr=dfZero.format(tempPrice);
@@ -132,9 +141,10 @@ public class orderDetails extends AppCompatActivity {
     {
         Intent change=new Intent(this, orderChange.class);
         change.putExtra("orderUID",orderUID);
-        change.putExtra("apptAddr",addrLabel.getText().toString());
-        change.putExtra("apptDate",apptDateLabel.getText().toString());
-        change.putExtra("apptTime",apptTimeLabel.getText().toString());
+        change.putExtra("apptAddr",apptAddr);
+        change.putExtra("apptDate",apptDate);
+        change.putExtra("apptTime",apptTime);
+        change.putExtra("vendName",vendName);
         startActivityForResult(change,1);
     }
     protected void onActivityResult(int reqCode, int resCode, Intent data)
@@ -148,11 +158,11 @@ public class orderDetails extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(this, "An error occurred while applying your changes. Please try again", Toast.LENGTH_LONG).show();
+                    setResult(RESULT_CANCELED);
                 }
                 break;
             default:
-                Toast.makeText(this, "An error occurred while saving your changes. Please try again", Toast.LENGTH_LONG).show();
+                setResult(RESULT_CANCELED);
                 break;
         }
         finish();
