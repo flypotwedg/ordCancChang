@@ -152,7 +152,6 @@
         android:text="save Changes"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:enabled="false"
         android:backgroundTint="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

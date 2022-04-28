@@ -1,5 +1,6 @@
 package com.example.ordcancchang;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -15,9 +16,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class orderChange extends AppCompatActivity {
 
@@ -59,6 +68,7 @@ public class orderChange extends AppCompatActivity {
 
     String address;
 
+    DatabaseReference database= FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +89,7 @@ public class orderChange extends AppCompatActivity {
         apptTime=getIntent().getStringExtra("apptTime");
         vendName =getIntent().getStringExtra("vendName");
 
-        String addrSplit[]=apptAddr.split(",");
+        String addrSplit[]=apptAddr.split(", ");
 
         //tokenize address
         streetInput.setText(addrSplit[0]);
@@ -124,20 +134,30 @@ public class orderChange extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() { //confirm button
             @Override
             public void onClick(View v) {
-                uplUpd();
+                if(!(street.isEmpty()&&city.isEmpty()&&state.isEmpty()&&zipcode.isEmpty()))
+                {
+                    uplUpd();
+                }
+                else
+                {
+                    Toast.makeText(orderChange.this, "Invalid input", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
     }
     public void uplUpd()
     {
-        //upload updated info to database
+        database.child("Orders").child(orderUID).child("apptAddr").setValue(address);
+        database.child("Orders").child(orderUID).child("apptDate").setValue(date.getText().toString());
+        database.child("Orders").child(orderUID).child("apptTime").setValue(time.getText().toString());
+
+        Toast.makeText(this, "Order updated", Toast.LENGTH_LONG).show();
         finish();
     }
     private TextWatcher addressTextWatch = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -146,9 +166,7 @@ public class orderChange extends AppCompatActivity {
             state = stateInput.getText().toString().trim();
             zipcode = zipcodeInput.getText().toString().trim();
 
-            address = street + " " + city + ", " + state + " " + zipcode;
-
-            confirmBtn.setEnabled(!(street.isEmpty() && city.isEmpty() && state.isEmpty() && zipcode.isEmpty()));
+            address = street + ", " + city + ", " + state + ", " + zipcode;
         }
         @Override
         public void afterTextChanged(Editable editable) {
