@@ -20,6 +20,7 @@ import java.util.Calendar;
 public class orderChange extends AppCompatActivity {
 
     String vendorName;
+    String apptAddr;
 
     EditText streetInput;
     EditText cityInput;
@@ -69,6 +70,13 @@ public class orderChange extends AppCompatActivity {
         stateInput = (EditText) findViewById(R.id.state);
         zipcodeInput = (EditText) findViewById(R.id.zipcode);
 
+        //tokenize address
+        streetInput.setText("");
+        cityInput.setText("");
+        stateInput.setText("");
+        zipcodeInput.setText("");
+
+
         streetInput.addTextChangedListener(addressTextWatch);
         cityInput.addTextChangedListener(addressTextWatch);
         stateInput.addTextChangedListener(addressTextWatch);
@@ -78,10 +86,14 @@ public class orderChange extends AppCompatActivity {
         vendorName = getIntent().getStringExtra("vendName");
         vendName.setText(vendorName);
 
+        apptAddr=getIntent().getStringExtra("apptAddr");
+        apptDate=getIntent().getStringExtra("apptDate");
+        apptTime=getIntent().getStringExtra("apptTime");
+
         dateBtn = (Button) findViewById(R.id.dateButton);
         date = (TextView) findViewById(R.id.dateDisp);
 
-        date.setText((month + 1) + "/" + (day + 1) + "/" + year); //changes placeholder text showing tomorrow's date
+        date.setText(apptDate); //changes text to apptDate
 
         dateBtn.setOnClickListener(new View.OnClickListener() { //select date button
             @Override
@@ -113,7 +125,8 @@ public class orderChange extends AppCompatActivity {
     }
     public void uplUpd()
     {
-
+        //upload updated info to database
+        finish();
     }
     private TextWatcher addressTextWatch = new TextWatcher() {
         @Override
@@ -155,6 +168,7 @@ public class orderChange extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int min) {
+                        time.setText(apptTime);
                         if (hour < vendOpen || hour > vendClose) //checks if time selected is within business hours
                         {
                             Toast.makeText(orderChange.this, "Vendor will be closed, select a different time", Toast.LENGTH_LONG).show();

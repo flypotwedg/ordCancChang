@@ -26,26 +26,6 @@ public class orderListAdapter extends ArrayAdapter<order>{
     @Override
     public View getView(int pos, View convView, ViewGroup parent)
     {
-        /*
-        String orderUID=getItem(pos).getOrderUID();
-        String vendName=getItem(pos).getVendName();
-        String apptDate=getItem(pos).getApptDate();
-        String apptTime=getItem(pos).getApptTime();
-
-        orderDetail order=new orderDetail(orderUID,vendName,apptDate,apptTime);
-
-        LayoutInflater inflate=LayoutInflater.from(this.context);
-        convView=inflate.inflate(res,parent,false);
-
-        TextView vendorName=(TextView) convView.findViewById(R.id.listVendName);
-        TextView date=(TextView) convView.findViewById(R.id.listApptDate);
-        TextView time=(TextView) convView.findViewById(R.id.listApptTime);
-
-        vendorName.setText(vendName);
-        date.setText(apptDate);
-        time.setText(apptTime);
-
-         */
         LayoutInflater inflate=LayoutInflater.from(this.context);
         convView=inflate.inflate(res,parent,false);
 

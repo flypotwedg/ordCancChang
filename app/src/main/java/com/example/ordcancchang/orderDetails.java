@@ -27,6 +27,7 @@ public class orderDetails extends AppCompatActivity {
 
     TextView orderUIDLabel;
     TextView vendNameLabel;
+    TextView addrLabel;
     TextView apptDateLabel;
     TextView apptTimeLabel;
     TextView priceLabel;
@@ -45,6 +46,7 @@ public class orderDetails extends AppCompatActivity {
 
         orderUIDLabel=(TextView) findViewById(R.id.orderUIDLabel);
         vendNameLabel=(TextView) findViewById(R.id.vendNameLabel);
+        addrLabel=(TextView)findViewById(R.id.addressLabel);
         apptDateLabel=(TextView) findViewById(R.id.apptDateLabel);
         apptTimeLabel=(TextView) findViewById(R.id.apptTimeLabel);
         priceLabel=(TextView) findViewById(R.id.priceLabel);
@@ -63,6 +65,7 @@ public class orderDetails extends AppCompatActivity {
                 {
                     orderUIDLabel.setText("Order ID:\n"+orderUID);
                     vendNameLabel.setText("Vendor:\n"+snapshot.child(orderUID).child("vendName").getValue().toString());
+                    addrLabel.setText("Address:\n"+snapshot.child(orderUID).child("apptAddr").getValue().toString());
                     apptDateLabel.setText("Appointment Date:\n"+snapshot.child(orderUID).child("apptDate").getValue().toString());
                     apptTimeLabel.setText("Appointment Time:\n"+snapshot.child(orderUID).child("apptTime").getValue().toString());
 
@@ -129,6 +132,9 @@ public class orderDetails extends AppCompatActivity {
     {
         Intent change=new Intent(this, orderChange.class);
         change.putExtra("orderUID",orderUID);
+        change.putExtra("apptAddr",addrLabel.getText().toString());
+        change.putExtra("apptDate",apptDateLabel.getText().toString());
+        change.putExtra("apptTime",apptTimeLabel.getText().toString());
         startActivityForResult(change,1);
     }
     protected void onActivityResult(int reqCode, int resCode, Intent data)
@@ -138,7 +144,7 @@ public class orderDetails extends AppCompatActivity {
             case 1: //change order
                 if(resCode==RESULT_OK)
                 {
-                    Toast.makeText(this, "Changes saved successfully", Toast.LENGTH_LONG).show();
+                    setResult(RESULT_OK);
                 }
                 else
                 {
